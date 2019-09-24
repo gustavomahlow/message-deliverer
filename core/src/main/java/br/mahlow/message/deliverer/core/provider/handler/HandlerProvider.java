@@ -1,7 +1,9 @@
 package br.mahlow.message.deliverer.core.provider.handler;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
+import br.mahlow.message.deliverer.api.handler.exception.HandlerShutdownFailed;
 import br.mahlow.message.deliverer.core.annotation.Provider;
+import br.mahlow.message.deliverer.core.exception.provider.FailedToShutdownProvider;
 import br.mahlow.message.deliverer.core.provider.BeanProvider;
 
 import java.util.HashMap;
@@ -28,8 +30,12 @@ public class HandlerProvider implements BeanProvider<MessageHandler> {
     }
 
     @Override
-    public void shutdown() {
-        for (MessageHandler handler : handlers.values())
-            handler.shutdown();
+    public void shutdown() throws FailedToShutdownProvider {
+        try {
+            for (MessageHandler handler : handlers.values())
+                handler.shutdown();
+        } catch (HandlerShutdownFailed e) {
+            throw new FailedToShutdownProvider(e);
+        }
     }
 }

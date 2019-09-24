@@ -1,6 +1,8 @@
-package br.mahlow.message.deliverer.core.manager.provider;
+package br.mahlow.message.deliverer.core.provider.manager;
 
 import br.mahlow.message.deliverer.core.annotation.Provider;
+import br.mahlow.message.deliverer.core.exception.provider.FailedToInitializeProvider;
+import br.mahlow.message.deliverer.core.exception.provider.FailedToShutdownProvider;
 import br.mahlow.message.deliverer.core.provider.BeanProvider;
 import org.reflections.Reflections;
 
@@ -31,37 +33,41 @@ public class ProviderManager {
         return (Class) ((ParameterizedType) beanProviderClass.getGenericInterfaces()[0]).getActualTypeArguments()[0];
     }
 
-    public void initialize() throws IllegalAccessException, InstantiationException {
-        Set<Class<? extends BeanProvider>> classes = lookup();
+    public void initialize() throws FailedToInitializeProvider {
+        try {
+            Set<Class<? extends BeanProvider>> classes = lookup();
 
-        for (Class<? extends BeanProvider> beanProviderClass : classes) {
-            Class<?> providerClass = getBeanProviderGeneric(beanProviderClass);
+            for (Class<? extends BeanProvider> beanProviderClass : classes) {
+                Class<?> providerClass = getBeanProviderGeneric(beanProviderClass);
 
-            Provider annotation = beanProviderClass.getAnnotation(Provider.class);
+                Provider annotation = beanProviderClass.getAnnotation(Provider.class);
 
-            if (isNull(annotation))
-                continue;
+                if (isNull(annotation))
+                    continue;
 
-            String annotationValue = annotation.value();
+                String annotationValue = annotation.value();
 
-            BeanProvider instance = beanProviderClass.newInstance();
-            instance.initialize();
+                BeanProvider instance = beanProviderClass.newInstance();
+                instance.initialize();
 
-            instances.put(providerClass, instance);
+                instances.put(providerClass, instance);
 
-            if (annotationValue.isEmpty())
-                providerInstances.put(beanProviderClass, instance);
-            else
-                providerInstances.put(annotationValue, instance);
+                if (annotationValue.isEmpty())
+                    providerInstances.put(beanProviderClass, instance);
+                else
+                    providerInstances.put(annotationValue, instance);
+            }
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new FailedToInitializeProvider("Failed to initialize provider", e);
         }
     }
 
-    public void startUp() {
+    public void startUp() throws FailedToInitializeProvider {
         for (BeanProvider provider : instances.values())
             provider.initialize();
     }
 
-    public void shutdown() {
+    public void shutdown() throws FailedToShutdownProvider {
         for (BeanProvider provider : instances.values())
             provider.shutdown();
     }

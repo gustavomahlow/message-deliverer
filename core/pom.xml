@@ -12,15 +12,10 @@
 
     <artifactId>message-deliverer-core</artifactId>
 
-    <properties>
-        <version.org.reflections>0.9.11</version.org.reflections>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>${version.org.reflections}</version>
         </dependency>
         <dependency>
             <groupId>br.mahlow</groupId>
