@@ -27,7 +27,7 @@ public class ServerApplication extends Application {
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .setScanners(new SubTypesScanner(false), new ResourcesScanner())
                 .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
-                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("br.mahlow.message.deliverer.server.resources"))));
+                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("br.mahlow.message.deliverer.server.rest"))));
 
         return reflections.getSubTypesOf(Object.class);
     }

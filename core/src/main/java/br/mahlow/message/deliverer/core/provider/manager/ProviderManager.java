@@ -90,21 +90,21 @@ public class ProviderManager {
         return clazz.cast(((BeanProvider<T>) instance).getInstance(id));
     }
 
-    public <T> T getProviderInstance(Class<T> clazz) {
+    public <T extends BeanProvider<?>> T getProviderInstance(Class<T> clazz) {
         BeanProvider instance = providerInstances.get(clazz);
 
         if (isNull(instance))
             return null;
 
-        return clazz.cast(((BeanProvider<T>) instance).getInstance());
+        return clazz.cast(instance);
     }
 
-    public <T> T getProviderInstance(Class<T> clazz, String id) {
-        BeanProvider instance = providerInstances.get(clazz);
+    public <T extends BeanProvider<?>> T getProviderInstance(Class<T> clazz, String id) {
+        BeanProvider instance = providerInstances.get(id);
 
         if (isNull(instance))
             return null;
 
-        return clazz.cast(((BeanProvider<T>) instance).getInstance(id));
+        return clazz.cast(instance);
     }
 }

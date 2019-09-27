@@ -38,4 +38,8 @@ public class HandlerProvider implements BeanProvider<MessageHandler> {
             throw new FailedToShutdownProvider(e);
         }
     }
+
+    public Map<String, MessageHandler> getHandlers() {
+        return handlers;
+    }
 }

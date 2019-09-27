@@ -1,8 +1,13 @@
 package br.mahlow.message.deliverer.server.startup;
 
+import br.mahlow.message.deliverer.api.handler.MessageHandler;
+import br.mahlow.message.deliverer.api.handler.exception.HandlerInitializationFailed;
+import br.mahlow.message.deliverer.core.business.provider.handler.HandlerProviderBusiness;
 import br.mahlow.message.deliverer.core.exception.provider.FailedToInitializeProvider;
+import br.mahlow.message.deliverer.core.exception.provider.handler.FailedToLoadHandler;
+import br.mahlow.message.deliverer.core.exception.provider.handler.InvalidHandlerException;
+import br.mahlow.message.deliverer.core.provider.handler.HandlerProvider;
 import br.mahlow.message.deliverer.core.provider.manager.ProviderManager;
-import br.mahlow.message.deliverer.server.application.ServerApplication;
 import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,8 +27,22 @@ public class StartupManager {
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         try {
             providerManager.initialize();
+
+            initializeDefaultHandlers();
         } catch (FailedToInitializeProvider e) {
             logger.fatal("Failed to start provider manager", e);
+        } catch (HandlerInitializationFailed | InvalidHandlerException | FailedToLoadHandler e) {
+            logger.fatal("Failed to initialize default handlers", e);
         }
+    }
+
+    private void initializeDefaultHandlers() throws FailedToLoadHandler, InvalidHandlerException, HandlerInitializationFailed {
+        HandlerProvider handlerProvider = providerManager.getProviderInstance(HandlerProvider.class);
+
+        HandlerProviderBusiness business = new HandlerProviderBusiness();
+
+        MessageHandler handler = business.lookupInJar("/home/gustavo/Desenvolvimento/Git/messagedeliverer/rabbitmq-handler/target/rabbitmq-handler-1.0/rabbitmq-handler-1.0.jar");
+
+        handlerProvider.getHandlers().put(handler.getId(), handler);
     }
 }
