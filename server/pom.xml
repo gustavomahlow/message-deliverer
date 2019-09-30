@@ -12,22 +12,6 @@
 
     <artifactId>message-deliverer-server</artifactId>
 
-    <properties>
-        <version.helidon>1.3.0</version.helidon>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.helidon.applications</groupId>
-                <artifactId>helidon-mp</artifactId>
-                <version>${version.helidon}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.reflections</groupId>
