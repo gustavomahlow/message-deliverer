@@ -5,7 +5,7 @@ import br.mahlow.message.deliverer.ampq.handler.message.Message;
 import br.mahlow.message.deliverer.ampq.handler.message.exchange.Exchange;
 import br.mahlow.message.deliverer.ampq.handler.message.queue.Queue;
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
-import br.mahlow.message.deliverer.api.handler.exception.HandlerNotificationFailed;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerNotificationFailed;
 import br.mahlow.message.deliverer.api.handler.mapper.MessageMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

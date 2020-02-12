@@ -1,8 +1,8 @@
 package br.mahlow.message.deliverer.api.handler;
 
-import br.mahlow.message.deliverer.api.handler.exception.HandlerInitializationFailed;
-import br.mahlow.message.deliverer.api.handler.exception.HandlerNotificationFailed;
-import br.mahlow.message.deliverer.api.handler.exception.HandlerShutdownFailed;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerNotificationFailed;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerShutdownFailed;
 import br.mahlow.message.deliverer.api.handler.mapper.MessageMapper;
 
 public interface MessageHandler<E> {

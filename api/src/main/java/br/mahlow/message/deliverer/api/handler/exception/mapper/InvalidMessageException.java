@@ -1,6 +1,6 @@
 package br.mahlow.message.deliverer.api.handler.exception.mapper;
 
-import br.mahlow.message.deliverer.api.handler.exception.HandlerException;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerException;
 
 public class InvalidMessageException extends HandlerException {
 
