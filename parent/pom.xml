@@ -12,9 +12,8 @@
 
     <modules>
         <module>../api</module>
-        <module>../core</module>
         <module>../rabbitmq-handler</module>
-        <module>../server</module>
+        <module>../micro</module>
     </modules>
 
     <properties>
@@ -23,18 +22,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <version.org.reflections>0.9.11</version.org.reflections>
         <version.log4j>2.12.1</version.log4j>
-        <version.helidon>1.3.0</version.helidon>
+        <version.javax.json>1.1.2</version.javax.json>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.helidon.applications</groupId>
-                <artifactId>helidon-mp</artifactId>
-                <version>${version.helidon}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
@@ -49,6 +41,11 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>${version.log4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.json</groupId>
+                <artifactId>javax.json-api</artifactId>
+                <version>${version.javax.json}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,8 +1,8 @@
 package br.mahlow.message.deliverer.server.rest.resources.notification;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
-import br.mahlow.message.deliverer.core.provider.manager.ProviderManager;
-import br.mahlow.message.deliverer.server.exception.rest.RestHandlerNotFound;
+import br.mahlow.message.deliverer.server.provider.manager.ProviderManager;
+import br.mahlow.message.deliverer.server.exception.rest.HandlerNotFound;
 import br.mahlow.message.deliverer.server.producer.context.ContextHolder;
 
 import javax.enterprise.context.RequestScoped;
@@ -36,7 +36,7 @@ public class NotificationController {
         MessageHandler instance = providerManager.getInstance(MessageHandler.class, id);
 
         if (isNull(instance))
-            throw new RestHandlerNotFound(String.format("Handler not found for id %s", id));
+            throw new HandlerNotFound(String.format("Handler not found for id %s", id));
 
         contextHolder.put(MessageHandler.class, instance);
 

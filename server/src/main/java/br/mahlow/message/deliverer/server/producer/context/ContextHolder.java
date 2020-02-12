@@ -13,6 +13,7 @@ public class ContextHolder {
         context.put(clazz, instance);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(Class<T> clazz) {
         return (T) context.get(clazz);
     }

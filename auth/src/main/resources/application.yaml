@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  host: 0.0.0.0
+security:
+  providers:
+    - abac:
+    - http-basic-auth:
+        realm: "helidon"
+        users:
+          - login: "user"
+            password: "user"
+            roles: ["ROLE_USER"]
+          - login: "admin"
+            password: "admin"
+            roles: ["ROLE_USER", "ROLE_ADMIN"]
