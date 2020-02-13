@@ -4,6 +4,7 @@ import br.mahlow.message.deliverer.api.handler.MessageHandler;
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;
 import br.mahlow.message.deliverer.server.exception.handler.FailedToLoadHandler;
 import br.mahlow.message.deliverer.server.exception.handler.InvalidHandlerException;
+import br.mahlow.message.deliverer.server.handler.loader.HandlerClassLoader;
 import org.reflections.Reflections;
 import org.reflections.util.ConfigurationBuilder;
 
@@ -20,13 +21,17 @@ public class HandlerProviderBusiness {
     private MessageHandler lookupInJar(URL jarUrl) throws
             InvalidHandlerException,
             HandlerInitializationFailed {
-        URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{jarUrl}, getClass().getClassLoader());
-
-        Reflections reflections = new Reflections(
-                new ConfigurationBuilder()
-                        .setUrls(jarUrl)
-                        .addClassLoader(urlClassLoader)
+        URLClassLoader urlClassLoader = new URLClassLoader(
+                new URL[]{jarUrl},
+                new HandlerClassLoader(getClass().getClassLoader(), getClass().getClassLoader().getParent())
         );
+
+        ConfigurationBuilder configuration = new ConfigurationBuilder()
+                .setUrls(jarUrl);
+
+        configuration.setClassLoaders(new ClassLoader[]{urlClassLoader});
+
+        Reflections reflections = new Reflections(configuration);
 
         Set<Class<? extends MessageHandler>> subTypes = reflections.getSubTypesOf(MessageHandler.class);
 
