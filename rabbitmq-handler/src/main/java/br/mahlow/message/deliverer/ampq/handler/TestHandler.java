@@ -43,8 +43,8 @@ public class TestHandler implements MessageHandler<Message> {
 
     private void declareExchange(Queue queue, Exchange exchange, Channel channel) throws IOException {
         channel.exchangeDeclare(
-            exchange.getExchange(), exchange.getType(), exchange.getDurable(),
-            exchange.getAutoDelete(), exchange.getInternal(), exchange.getArguments()
+                exchange.getExchange(), exchange.getType(), exchange.getDurable(),
+                exchange.getAutoDelete(), exchange.getInternal(), exchange.getArguments()
         );
 
         channel.queueBind(queue.getQueueName(), exchange.getExchange(), getRoutingKey(queue));

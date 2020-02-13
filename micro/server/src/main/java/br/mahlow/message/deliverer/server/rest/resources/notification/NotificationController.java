@@ -1,9 +1,9 @@
 package br.mahlow.message.deliverer.server.rest.resources.notification;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
-import br.mahlow.message.deliverer.server.provider.manager.ProviderManager;
 import br.mahlow.message.deliverer.server.exception.rest.HandlerNotFound;
 import br.mahlow.message.deliverer.server.producer.context.ContextHolder;
+import br.mahlow.message.deliverer.server.provider.manager.ProviderManager;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

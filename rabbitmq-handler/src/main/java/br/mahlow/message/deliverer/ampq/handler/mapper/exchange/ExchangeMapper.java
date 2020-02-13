@@ -1,6 +1,5 @@
 package br.mahlow.message.deliverer.ampq.handler.mapper.exchange;
 
-import br.mahlow.message.deliverer.ampq.handler.message.Message;
 import br.mahlow.message.deliverer.ampq.handler.message.exchange.Exchange;
 import br.mahlow.message.deliverer.api.handler.exception.mapper.InvalidMessageException;
 import br.mahlow.message.deliverer.api.handler.mapper.MessageMapper;

@@ -12,10 +12,27 @@
 
     <artifactId>message-deliverer-api</artifactId>
 
+    <properties>
+        <version.glassfish.javax.json>1.1.5</version.glassfish.javax.json>
+        <version.resteasy.client>4.4.2.Final</version.resteasy.client>
+        <version.resteasy.jackson>3.10.0.Final</version.resteasy.jackson>
+    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.json</artifactId>
+            <version>${version.glassfish.javax.json}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${version.resteasy.client}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-json-p-provider</artifactId>
+            <version>${version.resteasy.client}</version>
         </dependency>
     </dependencies>
 </project>
