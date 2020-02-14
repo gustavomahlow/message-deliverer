@@ -5,7 +5,7 @@ import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitiali
 import br.mahlow.message.deliverer.server.exception.handler.FailedToLoadHandler;
 import br.mahlow.message.deliverer.server.exception.handler.InvalidHandlerException;
 import br.mahlow.message.deliverer.server.exception.provider.FailedToInitializeProvider;
-import br.mahlow.message.deliverer.server.handler.HandlerProviderBusiness;
+import br.mahlow.message.deliverer.server.business.handler.HandlerProviderBusiness;
 import br.mahlow.message.deliverer.server.provider.handler.HandlerProvider;
 import br.mahlow.message.deliverer.server.provider.manager.ProviderManager;
 import org.apache.logging.log4j.Logger;

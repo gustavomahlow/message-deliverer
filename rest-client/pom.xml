@@ -10,15 +10,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>message-deliverer-api</artifactId>
+    <artifactId>message-deliverer-rest-client</artifactId>
 
     <properties>
+        <version.resteasy.client>4.4.2.Final</version.resteasy.client>
+        <version.resteasy.jackson>3.10.0.Final</version.resteasy.jackson>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${version.resteasy.client}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-json-p-provider</artifactId>
+            <version>${version.resteasy.client}</version>
         </dependency>
     </dependencies>
 </project>

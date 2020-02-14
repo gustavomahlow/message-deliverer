@@ -1,4 +1,4 @@
-package br.mahlow.message.deliverer.server.handler;
+package br.mahlow.message.deliverer.server.business.handler;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;

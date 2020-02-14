@@ -14,6 +14,7 @@
         <module>../api</module>
         <module>../rabbitmq-handler</module>
         <module>../micro</module>
+        <module>../rest-client</module>
     </modules>
 
     <properties>
@@ -22,10 +23,16 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <version.org.reflections>0.9.11</version.org.reflections>
         <version.log4j>2.12.1</version.log4j>
+        <version.glassfish.javax.json>1.1.5</version.glassfish.javax.json>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.json</artifactId>
+                <version>${version.glassfish.javax.json}</version>
+            </dependency>
             <dependency>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
