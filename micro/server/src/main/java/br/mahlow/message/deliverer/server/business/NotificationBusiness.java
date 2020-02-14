@@ -18,7 +18,7 @@ public class NotificationBusiness {
     private ContextHolder contextHolder;
 
     @SuppressWarnings("unchecked")
-    public JsonObject sendNotification(@NotNull JsonObject payload) {
+    public Object sendNotification(@NotNull JsonObject payload) {
         MessageHandler handler = contextHolder.get(MessageHandler.class);
 
         try {

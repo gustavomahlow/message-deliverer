@@ -20,7 +20,7 @@ public class NotificationInstanceController {
     @POST
     public void publishMessage(@Suspended AsyncResponse asyncResponse,
                                @NotNull JsonObject payload) {
-        JsonObject result = notificationBusiness.sendNotification(payload);
+        Object result = notificationBusiness.sendNotification(payload);
 
         asyncResponse.resume(Response.ok(result).build());
     }

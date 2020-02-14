@@ -19,7 +19,7 @@ import java.util.concurrent.TimeoutException;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.isNull;
 
-public class TestHandler implements MessageHandler<Message> {
+public class TestHandler implements MessageHandler<Message, JsonObject> {
 
     private ConnectionFactory connectionFactory;
 
