@@ -45,7 +45,7 @@ public class MessageMapperImpl implements MessageMapper<Message> {
         } catch (InvalidMessageException e) {
             throw e;
         } catch (Exception e) {
-            throw new InvalidMessageException("Failed to create message POJO", e);
+            throw new InvalidMessageException("Failed to create message. Invalid root object definition.", e);
         }
     }
 }

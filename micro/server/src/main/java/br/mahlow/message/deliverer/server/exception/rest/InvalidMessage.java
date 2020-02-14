@@ -4,17 +4,25 @@ import javax.ws.rs.core.Response;
 
 public class InvalidMessage extends RestException {
 
-    private static final long serialVersionUID = 128722818547930367L;
+    private static final long serialVersionUID = -3230472287794613815L;
 
     public InvalidMessage() {
-        super(Response.status(Response.Status.BAD_REQUEST).build());
+    }
+
+    public InvalidMessage(Throwable cause) {
+        super(cause);
     }
 
     public InvalidMessage(String message) {
-        super(message, Response.status(Response.Status.BAD_REQUEST).build());
+        super(message);
     }
 
     public InvalidMessage(String message, Throwable cause) {
-        super(message, cause, Response.status(Response.Status.BAD_REQUEST).build());
+        super(message, cause);
+    }
+
+    @Override
+    public Response.Status getResponseStatus() {
+        return Response.Status.BAD_REQUEST;
     }
 }

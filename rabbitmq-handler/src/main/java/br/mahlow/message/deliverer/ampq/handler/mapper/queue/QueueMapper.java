@@ -32,7 +32,7 @@ public class QueueMapper implements MessageMapper<Queue> {
 
             return queue;
         } catch (Exception e) {
-            throw new InvalidMessageException("Failed to create message POJO", e);
+            throw new InvalidMessageException("Failed to create message. Invalid queue definition.", e);
         }
     }
 }

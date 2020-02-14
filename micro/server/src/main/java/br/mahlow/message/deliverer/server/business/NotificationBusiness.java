@@ -18,17 +18,17 @@ public class NotificationBusiness {
     private ContextHolder contextHolder;
 
     @SuppressWarnings("unchecked")
-    public void sendNotification(@NotNull JsonObject payload) {
+    public JsonObject sendNotification(@NotNull JsonObject payload) {
         MessageHandler handler = contextHolder.get(MessageHandler.class);
 
         try {
             Object mappedMessage = handler.getMessageMapper().fromJson(payload);
 
-            handler.onNotification(mappedMessage);
+            return handler.onNotification(mappedMessage);
         } catch (br.mahlow.message.deliverer.api.handler.exception.handler.HandlerNotificationFailed e) {
-            throw new HandlerNotificationFailed("Failed to post notification", e);
+            throw new HandlerNotificationFailed(e);
         } catch (InvalidMessageException e) {
-            throw new InvalidMessage("Failed to parse json payload", e);
+            throw new InvalidMessage(e);
         }
     }
 }

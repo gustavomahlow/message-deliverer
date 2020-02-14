@@ -7,15 +7,21 @@ public abstract class RestException extends WebApplicationException {
 
     private static final long serialVersionUID = -8759658643888405062L;
 
-    public RestException(Response response) {
-        super(response);
+    public RestException() {
+        super(Response.ok().build());
     }
 
-    public RestException(String message, Response response) {
-        super(message, response);
+    public RestException(Throwable cause) {
+        super(cause);
     }
 
-    public RestException(String message, Throwable cause, Response response) {
-        super(message, cause, response);
+    public RestException(String message) {
+        super(message, Response.ok().build());
     }
+
+    public RestException(String message, Throwable cause) {
+        super(message, cause, Response.ok().build());
+    }
+
+    public abstract Response.Status getResponseStatus();
 }

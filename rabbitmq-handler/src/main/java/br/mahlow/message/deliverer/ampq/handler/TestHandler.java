@@ -11,6 +11,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -65,7 +67,7 @@ public class TestHandler implements MessageHandler<Message> {
     }
 
     @Override
-    public void onNotification(Message message) throws HandlerNotificationFailed {
+    public JsonObject onNotification(Message message) throws HandlerNotificationFailed {
         try (Connection connection = connectionFactory.newConnection()) {
             try (Channel channel = connection.createChannel()) {
                 Queue queue = message.getQueue();
@@ -75,6 +77,11 @@ public class TestHandler implements MessageHandler<Message> {
                 declareExchange(queue, exchange, channel);
 
                 publish(queue, exchange, channel, message);
+
+                return Json.createObjectBuilder()
+                        .add("message", "OK")
+                        .add("success", true)
+                        .build();
             }
         } catch (TimeoutException | IOException e) {
             throw new HandlerNotificationFailed("Failed to send message to RabbitMQ", e);

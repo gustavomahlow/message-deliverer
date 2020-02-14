@@ -33,7 +33,7 @@ public class ExchangeMapper implements MessageMapper<Exchange> {
 
             return exchange;
         } catch (Exception e) {
-            throw new InvalidMessageException("Failed to create message POJO", e);
+            throw new InvalidMessageException("Failed to create message. Invalid exchange definition.", e);
         }
     }
 }

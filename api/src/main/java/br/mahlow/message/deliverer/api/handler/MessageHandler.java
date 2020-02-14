@@ -5,11 +5,13 @@ import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerNotifica
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerShutdownFailed;
 import br.mahlow.message.deliverer.api.handler.mapper.MessageMapper;
 
+import javax.json.JsonObject;
+
 public interface MessageHandler<E> {
 
     void initializeResources() throws HandlerInitializationFailed;
 
-    void onNotification(E message) throws HandlerNotificationFailed;
+    JsonObject onNotification(E message) throws HandlerNotificationFailed;
 
     void shutdown() throws HandlerShutdownFailed;
 
