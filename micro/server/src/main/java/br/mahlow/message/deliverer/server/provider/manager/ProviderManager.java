@@ -7,6 +7,7 @@ import br.mahlow.message.deliverer.server.provider.BeanProvider;
 import org.reflections.Reflections;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -89,6 +90,16 @@ public class ProviderManager {
             return null;
 
         return clazz.cast(((BeanProvider<T>) instance).getInstance(id));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> Collection<T> listInstances(Class<T> clazz) {
+        BeanProvider instance = instances.get(clazz);
+
+        if (isNull(instance))
+            return null;
+
+        return ((BeanProvider<T>) instance).listInstances();
     }
 
     public <T extends BeanProvider<?>> T getProviderInstance(Class<T> clazz) {

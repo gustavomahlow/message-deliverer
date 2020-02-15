@@ -2,7 +2,7 @@ package br.mahlow.message.deliverer.server.startup;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;
-import br.mahlow.message.deliverer.server.business.handler.HandlerProviderBusiness;
+import br.mahlow.message.deliverer.server.business.handler.loader.MessageHandlerLoaderBusiness;
 import br.mahlow.message.deliverer.server.exception.handler.FailedToLoadHandler;
 import br.mahlow.message.deliverer.server.exception.handler.InvalidHandlerException;
 import br.mahlow.message.deliverer.server.exception.provider.FailedToInitializeProvider;
@@ -22,7 +22,7 @@ public class StartupManager {
     private ProviderManager providerManager;
 
     @Inject
-    private HandlerProviderBusiness handlerProviderBusiness;
+    private MessageHandlerLoaderBusiness messageHandlerLoaderBusiness;
 
     @Inject
     private Logger logger;
@@ -43,7 +43,7 @@ public class StartupManager {
     private void initializeDefaultHandlers() throws FailedToLoadHandler, InvalidHandlerException, HandlerInitializationFailed {
         HandlerProvider handlerProvider = providerManager.getProviderInstance(HandlerProvider.class);
 
-        MessageHandler handler = handlerProviderBusiness.lookupInJar("/home/gustavo/Desenvolvimento/Git/messagedeliverer/rabbitmq-handler/target/rabbitmq-handler-1.0/rabbitmq-handler-1.0.jar");
+        MessageHandler handler = messageHandlerLoaderBusiness.lookupInJar("/home/gustavo/Desenvolvimento/Git/messagedeliverer/rabbitmq-handler/target/rabbitmq-handler-1.0/rabbitmq-handler-1.0.jar");
 
         handlerProvider.getHandlers().put(handler.getId(), handler);
     }

@@ -6,6 +6,7 @@ import br.mahlow.message.deliverer.server.annotation.Provider;
 import br.mahlow.message.deliverer.server.exception.provider.FailedToShutdownProvider;
 import br.mahlow.message.deliverer.server.provider.BeanProvider;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,11 @@ public class HandlerProvider implements BeanProvider<MessageHandler> {
     @Override
     public MessageHandler getInstance() {
         return null;
+    }
+
+    @Override
+    public Collection<MessageHandler> listInstances() {
+        return handlers.values();
     }
 
     @Override

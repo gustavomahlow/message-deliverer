@@ -1,4 +1,4 @@
-package br.mahlow.message.deliverer.server.rest.mapper;
+package br.mahlow.message.deliverer.server.rest.mapper.exception.rest;
 
 import br.mahlow.message.deliverer.server.exception.rest.RestException;
 

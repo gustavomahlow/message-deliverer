@@ -5,7 +5,9 @@ import br.mahlow.message.deliverer.ampq.handler.message.Message;
 import br.mahlow.message.deliverer.ampq.handler.message.exchange.Exchange;
 import br.mahlow.message.deliverer.ampq.handler.message.queue.Queue;
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerNotificationFailed;
+import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerShutdownFailed;
 import br.mahlow.message.deliverer.api.handler.mapper.MessageMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -21,19 +23,26 @@ import static java.util.Objects.isNull;
 
 public class TestHandler implements MessageHandler<Message, JsonObject> {
 
-    private ConnectionFactory connectionFactory;
+    private final ThreadLocal<Channel> channelThreadLocal = new ThreadLocal<>();
 
     private MessageMapper<Message> messageMapper;
 
-    @Override
-    public void initializeResources() {
-        this.connectionFactory = new ConnectionFactory();
-        this.connectionFactory.setAutomaticRecoveryEnabled(true);
-        this.connectionFactory.setHost("localhost");
-        this.connectionFactory.setUsername("admin");
-        this.connectionFactory.setPassword("10011997");
+    private Connection connection;
 
-        this.messageMapper = new MessageMapperImpl();
+    @Override
+    public void initializeResources() throws HandlerInitializationFailed {
+        try {
+            ConnectionFactory connectionFactory = new ConnectionFactory();
+            connectionFactory.setAutomaticRecoveryEnabled(true);
+            connectionFactory.setHost("localhost");
+            connectionFactory.setUsername("admin");
+            connectionFactory.setPassword("10011997");
+
+            this.connection = connectionFactory.newConnection();
+            this.messageMapper = new MessageMapperImpl();
+        } catch (TimeoutException | IOException e) {
+            throw new HandlerInitializationFailed(e);
+        }
     }
 
     private void declareQueue(Queue queue, Channel channel) throws IOException {
@@ -66,31 +75,47 @@ public class TestHandler implements MessageHandler<Message, JsonObject> {
         );
     }
 
+    private Channel setAndGetChannel() throws IOException {
+        Channel channel = connection.createChannel();
+
+        channelThreadLocal.set(channel);
+
+        return channel;
+    }
+
     @Override
     public JsonObject onNotification(Message message) throws HandlerNotificationFailed {
-        try (Connection connection = connectionFactory.newConnection()) {
-            try (Channel channel = connection.createChannel()) {
-                Queue queue = message.getQueue();
-                Exchange exchange = message.getExchange();
+        try {
+            Channel channel = channelThreadLocal.get();
 
-                declareQueue(message.getQueue(), channel);
-                declareExchange(queue, exchange, channel);
+            if (isNull(channel) || !channel.isOpen())
+                channel = setAndGetChannel();
 
-                publish(queue, exchange, channel, message);
+            Queue queue = message.getQueue();
+            Exchange exchange = message.getExchange();
 
-                return Json.createObjectBuilder()
-                        .add("message", "OK")
-                        .add("success", true)
-                        .build();
-            }
-        } catch (TimeoutException | IOException e) {
+            declareQueue(message.getQueue(), channel);
+            declareExchange(queue, exchange, channel);
+
+            publish(queue, exchange, channel, message);
+
+            return Json.createObjectBuilder()
+                    .add("message", "OK")
+                    .add("success", true)
+                    .build();
+        } catch (IOException e) {
             throw new HandlerNotificationFailed("Failed to send message to RabbitMQ", e);
         }
     }
 
     @Override
-    public void shutdown() {
-        System.out.println("Shutdown");
+    public void shutdown() throws HandlerShutdownFailed {
+        try {
+            System.out.println("Shutdown");
+            this.connection.close();
+        } catch (IOException e) {
+            throw new HandlerShutdownFailed(e);
+        }
     }
 
     @Override

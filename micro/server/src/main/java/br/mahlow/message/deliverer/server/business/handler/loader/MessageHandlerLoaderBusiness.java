@@ -1,4 +1,4 @@
-package br.mahlow.message.deliverer.server.business.handler;
+package br.mahlow.message.deliverer.server.business.handler.loader;
 
 import br.mahlow.message.deliverer.api.handler.MessageHandler;
 import br.mahlow.message.deliverer.api.handler.exception.handler.HandlerInitializationFailed;
@@ -16,7 +16,7 @@ import java.net.URLClassLoader;
 import java.util.Set;
 
 @Dependent
-public class HandlerProviderBusiness {
+public class MessageHandlerLoaderBusiness {
 
     private MessageHandler lookupInJar(URL jarUrl) throws
             InvalidHandlerException,

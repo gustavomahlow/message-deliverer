@@ -2,7 +2,7 @@ package br.mahlow.message.deliverer.server.rest.resources.notification;
 
 import br.mahlow.message.deliverer.server.business.NotificationBusiness;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Response;
 
-@RequestScoped
+@ApplicationScoped
 public class NotificationInstanceController {
 
     @Inject
