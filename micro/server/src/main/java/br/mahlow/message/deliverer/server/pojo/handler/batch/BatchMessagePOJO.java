@@ -2,6 +2,7 @@ package br.mahlow.message.deliverer.server.pojo.handler.batch;
 
 import br.mahlow.message.deliverer.server.pojo.handler.HandlerMessagePOJO;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -11,6 +12,7 @@ public class BatchMessagePOJO {
 
     @NotNull
     @Size(min = 1)
+    @Valid
     private Collection<HandlerMessagePOJO> messages;
 
     public Collection<HandlerMessagePOJO> getMessages() {
