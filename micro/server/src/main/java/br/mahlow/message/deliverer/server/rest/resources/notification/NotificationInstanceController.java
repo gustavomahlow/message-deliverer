@@ -1,6 +1,6 @@
 package br.mahlow.message.deliverer.server.rest.resources.notification;
 
-import br.mahlow.message.deliverer.server.business.NotificationBusiness;
+import br.mahlow.message.deliverer.server.business.notification.NotificationBusiness;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

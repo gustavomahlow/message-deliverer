@@ -1,5 +1,6 @@
 package br.mahlow.message.deliverer.server.application;
 
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -27,8 +28,11 @@ public class ServerApplication extends Application {
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .setScanners(new SubTypesScanner(false), new ResourcesScanner())
                 .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
-                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("br.mahlow.message.deliverer.server.rest"))));
+                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("br.mahlow.message.deliverer.server.rest.resources"))));
 
-        return reflections.getSubTypesOf(Object.class);
+        Set<Class<?>> result = reflections.getSubTypesOf(Object.class);
+        result.add(JacksonFeature.class);
+
+        return result;
     }
 }
