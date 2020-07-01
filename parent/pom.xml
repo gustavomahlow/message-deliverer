@@ -22,7 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <version.org.reflections>0.9.11</version.org.reflections>
-        <version.log4j>2.12.1</version.log4j>
+        <version.log4j>2.13.3</version.log4j>
         <version.glassfish.javax.json>1.1.5</version.glassfish.javax.json>
     </properties>
 
